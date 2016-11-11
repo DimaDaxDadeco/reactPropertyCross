@@ -13,7 +13,7 @@ const realtys = [
         },
         {
             id: 3,
-            name: "house2"
+            name: "house24"
         }
     ];
 
