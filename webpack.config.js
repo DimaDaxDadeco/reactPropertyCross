@@ -34,5 +34,10 @@ module.exports = {
             "components": path.resolve(__dirname, "src", "components")
         },
         extensions: ["", ".js"]
+    },
+    devServer: {
+        hot: true,
+        historyApiFallback: true,
+        contentBase: "./public"
     }
 };
