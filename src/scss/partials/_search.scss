@@ -1,0 +1,17 @@
+.search-top {
+    margin-top: 15px;
+    .favorites {
+        margin: 10px 0;
+    }
+    .search-res {
+        margin-top: 10px;
+        border-top: 1px solid #ccc;
+        padding-top: 10px;
+        .index {
+            font-weight: bold;
+        }
+        .title {
+            padding-left: 10px;
+        }
+    }
+}
