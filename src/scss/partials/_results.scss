@@ -1,0 +1,29 @@
+.results {
+    .count-matches {
+        text-align:center;
+        padding: 15px;
+    }
+    .matches {
+        border: 1px solid #ccc;
+        padding: 15px;
+        margin-bottom: 10px;
+        .photo {
+            max-width: 50%;
+            float: left;
+            display: block;
+        }
+        .short-info {
+            float: right;
+            width: 50%;
+            text-align: center;
+            .title {
+                font-size: 2em;
+                font-weight: bold;
+            }
+            .price {
+                font-size: 1.5em;
+                color: red;
+            }
+        }
+    }
+}

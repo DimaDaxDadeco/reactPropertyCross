@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getLocations } from "./action";
+import { getLocations, resetListings } from "./action";
 import Location from "./location";
 
 class LocationsList extends Component {
@@ -10,6 +10,10 @@ class LocationsList extends Component {
         this.state = {
             placeName: ""
         };
+    }
+
+    componentDidMount() {
+        this.props.resetListings();
     }
 
     getLocations = () => {
@@ -22,21 +26,19 @@ class LocationsList extends Component {
         });
     }
 
-    eachLocation = (el, i) => {
-        return (
-            <Location
-                key={el.title}
-                title={el.title}
-                totalResults={el.totalResults}
-                index={i + 1}
-            />
-        );
-    }
+    eachLocation = (el, i) => (
+        <Location
+            key={el.title}
+            title={el.title}
+            totalResults={el.totalResults}
+            index={i + 1}
+        />
+    )
 
 
     render() {
 
-        const { totalResults, title, recentSearches } = this.props.locationsList;
+        const { recentSearches } = this.props.locationsList;
 
         return (
             <div className="search-top">
@@ -62,7 +64,6 @@ class LocationsList extends Component {
                 <div className="row">
                     {recentSearches.map(this.eachLocation)}
                 </div>
-
             </div>
         );
     }
@@ -75,7 +76,8 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-    getLocations
+    getLocations,
+    resetListings
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LocationsList);

@@ -1,4 +1,14 @@
 export const getLocations = searchQuery => dispatch => {
+
+    const numOfMatchingElem = (title, recentSearches) => {
+        const titleList = [];
+        recentSearches.forEach(item => {
+          titleList.push(item.title);
+        });
+        const numOfElement = titleList.indexOf(title);
+        return numOfElement;
+    };
+
     if (searchQuery) {
         const url = `http://api.nestoria.co.uk/api?country=uk&pretty=1&action=search_listings&encoding=json&listing_type=buy&page=1&place_name=${searchQuery}`;
         fetch(url)
@@ -28,14 +38,10 @@ export const getLocations = searchQuery => dispatch => {
             });
         });
   }
+};
 
-    const numOfMatchingElem = (title, recentSearches) => {
-        const titleList = [];
-        recentSearches.forEach(item => {
-          titleList.push(item.title);
-        })
-        const numOfElement = titleList.indexOf(title);
-
-        return numOfElement;
-    }
+export const resetListings = () => dispatch => {
+    dispatch({
+        type: "RESET_LISTINGS"
+    });
 };
