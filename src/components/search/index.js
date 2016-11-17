@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getLocations, resetListings } from "./action";
 import Location from "./location";
+import { Link } from "react-router";
+import Modal from "../common/modal";
+
 
 class LocationsList extends Component {
 
@@ -35,15 +38,15 @@ class LocationsList extends Component {
         />
     )
 
-
     render() {
 
         const { recentSearches } = this.props.locationsList;
 
         return (
             <div className="search-top">
+                <Modal />
                 <div className="row">
-                    <div className="col-xs-12 favorites"><a className="btn btn-default pull-right" role="button">Favourite</a></div>
+                    <div className="col-xs-12 favorites"><Link to="/favourites/mybox" className="btn btn-default pull-right">Favourites</Link></div>
                 </div>
                 <div className="row">
                     <p className="col-xs-12">Use the form below to search for houses to buy. You can search by place-name, postcode, or click 'My location', to search in your current location!</p>

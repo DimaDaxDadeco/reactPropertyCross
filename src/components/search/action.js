@@ -9,11 +9,33 @@ export const getLocations = searchQuery => dispatch => {
         return numOfElement;
     };
 
-    if (searchQuery) {
+    const openModal = (responseCode, responseText) => ({
+            type: "SET_ERROR",
+            responseCode,
+            responseText
+    });
+
         const url = `http://api.nestoria.co.uk/api?country=uk&pretty=1&action=search_listings&encoding=json&listing_type=buy&page=1&place_name=${searchQuery}`;
         fetch(url)
         .then(response => response.json())
         .then(setLocations => {
+
+            const { application_response_code: responseCode } = setLocations.response;
+            const errors = {
+                "200": "ambiguous location",
+                "201": "unknown location",
+                "202": "misspelled location",
+                "210": "coordinate error",
+                "900": "bad request",
+                "500": "internal Nestoria error"
+            };
+            const hasError = !!errors[responseCode];
+
+            if (hasError) {
+                const responseText = errors[responseCode];
+                dispatch(openModal(responseCode, responseText));
+                return;
+            }
 
             const title = setLocations.response.locations[0].title;
             const totalResults = setLocations.response.total_results;
@@ -37,7 +59,6 @@ export const getLocations = searchQuery => dispatch => {
                 recentSearches
             });
         });
-  }
 };
 
 export const resetListings = () => dispatch => {

@@ -8,7 +8,7 @@ export default class Location extends Component {
 
         return (
             <div className="col-xs-12 search-res">
-                 <Link to={`results/${title}`}>
+                 <Link to={`/results/${title}`}>
                     <span className="index">#{index}</span>
                     <span className="title">{title}(<span className="totalResults">{totalResults}</span>)</span>
                 </Link>

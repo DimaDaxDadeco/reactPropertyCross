@@ -16,3 +16,10 @@ export const getRealtysList = (searchQuery, numPage) => dispatch => {
             });
         });
 };
+
+export const selectRealty = eachRealtyInfo => dispatch => {
+    dispatch({
+        type: "SELECT_REALTY",
+        eachRealtyInfo
+    });
+};

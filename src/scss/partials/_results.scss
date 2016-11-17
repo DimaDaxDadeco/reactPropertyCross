@@ -1,6 +1,6 @@
 .results {
+    text-align: center;
     .count-matches {
-        text-align:center;
         padding: 15px;
     }
     .matches {
@@ -15,7 +15,6 @@
         .short-info {
             float: right;
             width: 50%;
-            text-align: center;
             .title {
                 font-size: 2em;
                 font-weight: bold;
