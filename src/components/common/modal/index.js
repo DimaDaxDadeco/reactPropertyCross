@@ -17,7 +17,6 @@ class Modal extends Component {
     }
 
     componentWillReceiveProps() {
-        console.log(this.state.view);
         this.setState({
             view: true
         });
