@@ -10,10 +10,9 @@ export default class RealtyList extends Component {
             title={el.title}
             price={el.price}
             propertyType={el.property_type}
-            locationTitle={this.props.id}
             imgUrl={el.img_url}
             realtyInfo={el}
-            typeOfSearch={this.props.typeOfSearch}
+            pathname={this.props.pathname}
         />
     )
 

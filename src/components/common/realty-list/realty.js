@@ -28,10 +28,11 @@ class Realty extends Component {
 
     render() {
 
-        const { title, price, propertyType, imgUrl, locationTitle, realtyInfo, typeOfSearch } = this.props;
+        const { title, price, propertyType, imgUrl, realtyInfo, pathname } = this.props;
+        console.log(this.props);
 
         return (
-            <Link to={`/${typeOfSearch}/${locationTitle}/${title}`} onClick={this.selectRealty(realtyInfo)}>
+            <Link to={`${pathname}/${title}`} onClick={this.selectRealty(realtyInfo)}>
                 <div className="col-xs-12 matches">
                     <img src={imgUrl} className="photo" alt="realty photo"/>
                     <div className="short-info">

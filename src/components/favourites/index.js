@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getFavouritesList } from "./action";
-import RealtyList from "../common/realty-list";;
+import RealtyList from "../common/realty-list";
 
 class FavouritesList extends Component {
 
@@ -11,11 +11,11 @@ class FavouritesList extends Component {
     render() {
 
         const { listings } = this.props.favouritesList;
-        const typeOfSearch = "favourites";
+        const { pathname } = this.props.location;
         const { id } = this.props.params;
 
         return (
-            <RealtyList listings={listings} typeOfSearch={typeOfSearch} id={id} />
+            <RealtyList listings={listings} pathname={pathname} id={id} />
         );
     }
 }
