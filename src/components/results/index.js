@@ -22,7 +22,7 @@ class ResultsList extends Component {
         const { pathname } = this.props.location;
 
         return (
-            <RealtyList listings={listings} totalResults={totalResults} id={id} pathname={pathname} updateRealtyList={this.updateRealtyList}  />
+            <RealtyList listings={listings} totalResults={totalResults} id={id} pathname={pathname} updateRealtyList={this.updateRealtyList} />
         );
     }
 }

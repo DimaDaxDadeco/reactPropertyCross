@@ -8,6 +8,7 @@ class FavouritesList extends Component {
     componentDidMount() {
         this.props.getFavouritesList();
     }
+
     render() {
 
         const { listings } = this.props.favouritesList;

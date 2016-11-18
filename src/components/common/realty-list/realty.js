@@ -29,7 +29,6 @@ class Realty extends Component {
     render() {
 
         const { title, price, propertyType, imgUrl, realtyInfo, pathname } = this.props;
-        console.log(this.props);
 
         return (
             <Link to={`${pathname}/${title}`} onClick={this.selectRealty(realtyInfo)}>
