@@ -1,6 +1,6 @@
 export const resetModalError = () => dispatch => {
     dispatch({
-        type: "SET_FAVOURITES",
+        type: "SET_ERROR",
         responseCode: null,
         responseText: ""
     });

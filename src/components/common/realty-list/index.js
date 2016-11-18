@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { Link } from "react-router";
 import Realty from "./realty";
 
-
-
 export default class RealtyList extends Component {
 
     eachRealty = (el, i) => (
@@ -19,6 +17,8 @@ export default class RealtyList extends Component {
         />
     )
 
+    showLoadMore = (totalResults, currentPage) => totalResults !== currentPage && totalResults;
+
     render() {
 
         const { listings, totalResults } = this.props;
@@ -33,10 +33,11 @@ export default class RealtyList extends Component {
                     {currentPage}
                     {totalResults ? <span> of {totalResults} </span> : null} matches
                 </div>
+                {listings.map(this.eachRealty)}
                 {
-                    listings.map(this.eachRealty)
+                    this.showLoadMore(totalResults, currentPage) ?
+                        <button name="load-more" className="btn btn-default" onClick={this.props.updateRealtyList}>load-more</button> : null
                 }
-                {this.props.updateRealtyList ? <button name="load-more" className="btn btn-default" onClick={this.props.updateRealtyList}>load-more</button> : null}
             </div>
         );
     }

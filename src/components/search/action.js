@@ -1,26 +1,24 @@
-export const getLocations = searchQuery => dispatch => {
-
-    const numOfMatchingElem = (title, recentSearches) => {
-        const titleList = [];
-        recentSearches.forEach(item => {
-          titleList.push(item.title);
-        });
-        const numOfElement = titleList.indexOf(title);
-        return numOfElement;
-    };
-
-    const openModal = (responseCode, responseText) => ({
-            type: "SET_ERROR",
-            responseCode,
-            responseText
+const numOfMatchingElem = (title, recentSearches) => {
+    const titleList = [];
+    recentSearches.forEach(item => {
+      titleList.push(item.title);
     });
+    const numOfElement = titleList.indexOf(title);
+    return numOfElement;
+};
 
-        const url = `http://api.nestoria.co.uk/api?country=uk&pretty=1&action=search_listings&encoding=json&listing_type=buy&page=1&place_name=${searchQuery}`;
-        fetch(url)
+const openModal = (responseCode, responseText) => ({
+        type: "SET_ERROR",
+        responseCode,
+        responseText
+});
+
+const getLocationsQuery = (url, dispatch) => {
+    fetch(url)
         .then(response => response.json())
-        .then(setLocations => {
+        .then(getLocations => {
 
-            const { application_response_code: responseCode } = setLocations.response;
+            const { application_response_code: responseCode } = getLocations.response;
             const errors = {
                 "200": "ambiguous location",
                 "201": "unknown location",
@@ -37,8 +35,8 @@ export const getLocations = searchQuery => dispatch => {
                 return;
             }
 
-            const title = setLocations.response.locations[0].title;
-            const totalResults = setLocations.response.total_results;
+            const title = getLocations.response.locations[0].title;
+            const totalResults = getLocations.response.total_results;
             const recentSearches = localStorage.recentSearches ? JSON.parse(localStorage.recentSearches) : [];
 
             if (numOfMatchingElem(title, recentSearches) !== -1) {
@@ -59,6 +57,10 @@ export const getLocations = searchQuery => dispatch => {
                 recentSearches
             });
         });
+}
+
+export const getLocations = url => dispatch => {
+    getLocationsQuery(url, dispatch);
 };
 
 export const resetListings = () => dispatch => {

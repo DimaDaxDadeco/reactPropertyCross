@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { resetModalError } from "./action";
 
 class Modal extends Component {
 
@@ -11,28 +10,36 @@ class Modal extends Component {
         };
     }
 
-    componentWillReceiveProps() {
-        console.log(this.props);
-    }
-
     hide = () => {
         this.setState({
             view: false
         });
-        this.resetModalError();
+    }
+
+    componentWillReceiveProps() {
+        console.log(this.state.view);
+        this.setState({
+            view: true
+        });
     }
 
     render() {
+
+        const responseCode = this.props.modalError.responseCode;
+        const responseText = this.props.modalError.responseText;
+        const view = this.state.view;
+
         return (
             <div>
-            { this.state.view ?
-                <div id="error-wrap">
-                    <div className="hide-wrap" onClick={this.hide}></div>
-                    <div id="error-modal">
-                        <p className="error-type">101</p>
-                        <p className="error-text">You are stupid</p>
-                    </div>
-                </div> : null
+            {
+                view ?
+                    <div id="error-wrap">
+                        <div className="hide-wrap" onClick={this.hide}></div>
+                        <div id="error-modal">
+                            <p className="error-type">{responseCode}</p>
+                            <p className="error-text">{responseText}</p>
+                        </div>
+                    </div> : null
             }
             </div>
         );
@@ -45,8 +52,4 @@ function mapStateToProps(state) {
     };
 }
 
-const mapDispatchToProps = {
-    resetModalError
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Modal);
+export default connect(mapStateToProps)(Modal);
