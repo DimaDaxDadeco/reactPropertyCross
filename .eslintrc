@@ -7,6 +7,14 @@
             "jsx": true
         }
     },
+    "plugins": [
+        "react"
+    ],
+    "settings": {
+        "react": {
+            "pragma": "React"
+        }
+    },
     "rules": {
         "comma-dangle": 1,
         "no-cond-assign": [2, "always"],
@@ -130,7 +138,7 @@
         "react/prefer-es6-class": 2,
         "react/react-in-jsx-scope": 2,
         "react/jsx-uses-vars": 2,
-        "react/jsx-uses-react": [2, { "pragma": "React" }],
+        "react/jsx-uses-react": 2,
         "react/no-deprecated": 2,
         "react/no-direct-mutation-state": 2,
         "react/no-unused-prop-types": 1,
@@ -152,14 +160,6 @@
         "browser": true,
         "es6": true
     },
-    "extends": "eslint:recommended",
-    "plugins": [
-        "react"
-    ],
-    "settings": {
-        "react": {
-            "pragma": "React"
-        }
-    }
+    "extends": ["eslint:recommended"]
 
 }
