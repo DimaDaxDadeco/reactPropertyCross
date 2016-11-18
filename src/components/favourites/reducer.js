@@ -7,7 +7,7 @@ export default function favouritesList(state = initialState, action) {
         case "SET_FAVOURITES":
             return {
                 ...state,
-                listings: [...action.listings],
+                listings: [...action.listings]
             };
 
         default:

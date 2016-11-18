@@ -1,4 +1,5 @@
 export const getFavouritesList = () => dispatch => {
+
     const listings = localStorage.favourites ? JSON.parse(localStorage.favourites) : [];
 
     dispatch({

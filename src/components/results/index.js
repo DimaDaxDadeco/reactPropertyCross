@@ -19,10 +19,10 @@ class ResultsList extends Component {
 
         const { listings, totalResults } = this.props.realtysList;
         const { id } = this.props.params;
-        const typeOfSearch = "results";
+        const { pathname } = this.props.location;
 
         return (
-            <RealtyList listings={listings} totalResults={totalResults} id={id} updateRealtyList={this.updateRealtyList} typeOfSearch={typeOfSearch} />
+            <RealtyList listings={listings} totalResults={totalResults} id={id} pathname={pathname} updateRealtyList={this.updateRealtyList} />
         );
     }
 }
