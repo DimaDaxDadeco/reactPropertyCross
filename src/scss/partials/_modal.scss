@@ -1,4 +1,4 @@
-#error-wrap {
+.error-wrap {
     position: fixed;
     width: 100vw;
     height: 100vh;
@@ -10,7 +10,7 @@
         height: 100%;
         background: rgba(0,0,0,0.3);
     }
-    #error-modal {
+    .error-modal {
         position: absolute;
         width: 300px;
         height: 400px;

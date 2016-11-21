@@ -7,36 +7,35 @@ export default class RealtyList extends Component {
     eachRealty = (el, i) => (
         <Realty
             key={i}
-            title={el.title}
-            price={el.price}
-            propertyType={el.property_type}
-            imgUrl={el.img_url}
             realtyInfo={el}
             pathname={this.props.pathname}
         />
     )
 
-    showLoadMore = (totalResults, currentPage) => totalResults !== currentPage && totalResults;
+    get showLoadMore() {
+        const { totalResults, listings, updateRealtyList } = this.props;
+        const resultsShowing = listings.length;
+        if (totalResults !== resultsShowing && totalResults) {
+            return <button name="load-more" className="btn btn-default" onClick={updateRealtyList}>load-more</button>;
+        }
+    }
 
     render() {
 
         const { listings, totalResults } = this.props;
-        const currentPage = listings.length;
+        const resultsShowing = listings.length;
 
         return (
             <div className="row results">
-                <div id="back-button" className="btn btn-default">
+                <div className="btn btn-default back-button">
                     <Link to={"/"}>Back</Link>
                 </div>
                 <div className="col-xs-12 count-matches">
-                    {currentPage}
-                    {totalResults ? <span> of {totalResults} </span> : null} matches
+                    {resultsShowing}
+                    {totalResults && <span> of {totalResults} </span>} matches
                 </div>
                 {listings.map(this.eachRealty)}
-                {
-                    this.showLoadMore(totalResults, currentPage) ?
-                        <button name="load-more" className="btn btn-default" onClick={this.props.updateRealtyList}>load-more</button> : null
-                }
+                {this.showLoadMore}
             </div>
         );
     }

@@ -12,14 +12,13 @@ class ResultsList extends Component {
     }
 
     updateRealtyList = () => {
-        this.props.getRealtysList(this.props.params.id, this.props.realtysList.numPage);
+        const { getRealtysList, params: { id }, realtysList: { numPage } } = this.props;
+        getRealtysList(id, numPage);
     }
 
     render() {
 
-        const { listings, totalResults } = this.props.realtysList;
-        const { id } = this.props.params;
-        const { pathname } = this.props.location;
+        const { realtysList: { listings, totalResults }, params: { id }, location: { pathname } } = this.props;
 
         return (
             <RealtyList listings={listings} totalResults={totalResults} id={id} pathname={pathname} updateRealtyList={this.updateRealtyList} />
@@ -27,11 +26,7 @@ class ResultsList extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        realtysList: state.realtysList
-    };
-}
+const mapStateToProps = ({ realtysList }) => ({ realtysList });
 
 const mapDispatchToProps = {
     getRealtysList

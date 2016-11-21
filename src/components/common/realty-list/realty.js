@@ -15,12 +15,12 @@ class Realty extends Component {
     }
 
     scrollToSelectedElement = () => {
-        if (this.props.realty.eachRealtyInfo) {
-            const node = ReactDOM.findDOMNode(this);
-            const { title: titleOfSelectedRealty } = this.props.realty.eachRealtyInfo;
-            const { title: titleEachRealty } = this.props;
+        if (this.props.realty.selectedRealty) {
 
-            if (titleOfSelectedRealty === titleEachRealty) {
+            const node = ReactDOM.findDOMNode(this);
+            const { realty: { selectedRealty }, realtyInfo } = this.props;
+
+            if (realtyInfo === selectedRealty) {
                  node.scrollIntoView();
             }
         }
@@ -28,12 +28,12 @@ class Realty extends Component {
 
     render() {
 
-        const { title, price, propertyType, imgUrl, realtyInfo, pathname } = this.props;
+        const { pathname, realtyInfo: { title, price, propertyType, img_url: imgUrl }, realtyInfo } = this.props;
 
         return (
             <Link to={`${pathname}/${title}`} onClick={this.selectRealty(realtyInfo)}>
                 <div className="col-xs-12 matches">
-                    <img src={imgUrl} className="photo" alt="realty photo"/>
+                    <img src={imgUrl} className="photo" alt="realty photo" />
                     <div className="short-info">
                         <p className="title">{title}</p>
                         <p className="price">{price}$</p>
@@ -44,11 +44,9 @@ class Realty extends Component {
         );
     }
 }
-function mapStateToProps(state) {
-    return {
-        realty: state.realty
-    };
-}
+
+const mapStateToProps = ({ realty }) => ({ realty });
+
 
 const mapDispatchToProps = {
     selectRealty

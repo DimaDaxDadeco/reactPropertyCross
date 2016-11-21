@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getLocations, resetListings } from "./action";
+import { getLocations, getMyLocations, resetListings } from "./action";
 import Location from "./location";
 import { Link } from "react-router";
-import Modal from "../common/modal";
+import GeolocationService from "../services/GeolocationService";
 
 
 class LocationsList extends Component {
@@ -19,31 +19,28 @@ class LocationsList extends Component {
         this.props.resetListings();
     }
 
-    getLocations = () => {
-        const url = `http://api.nestoria.co.uk/api?country=uk&pretty=1&action=search_listings&encoding=json&listing_type=buy&page=1&place_name=${this.state.placeName}`;
-        this.props.getLocations(url);
+    getLocations = placeName => () => {
+        this.props.getLocations(placeName);
     }
 
-    getMyLocation = () => {
-        let url = "http://api.nestoria.co.uk/api?country=uk&pretty=1&action=search_listings&encoding=json&listing_type=buy&page=1&centre_point=";
-        const promise = new Promise ((resolve, reject) => {
-            navigator.geolocation.getCurrentPosition(result => {
-                const coordinates = {
-                    longitude:  result.coords.longitude,
-                    latitude:  result.coords.latitude
-                };
-                url += coordinates.longitude + "," + coordinates.latitude;
-                resolve(url);
-            }, reject)
-        }).then(url => {
-            this.props.getLocations(url);
-        });
-    }
+    getMyLocation = () => (
+        GeolocationService.getCoordinates()
+            .then(this.props.getMyLocations)
+    )
 
     onChangeHandler = e => {
         this.setState({
             placeName: e.target.value
         });
+    }
+
+    get recentSearches() {
+        const searches = this.props.locationsList.recentSearches.map(this.eachLocation);
+        return (
+            <div className="row">
+                {searches}
+            </div>
+        );
     }
 
     eachLocation = (el, i) => (
@@ -57,11 +54,10 @@ class LocationsList extends Component {
 
     render() {
 
-        const { recentSearches } = this.props.locationsList;
+        const { placeName } = this.state;
 
         return (
             <div className="search-top">
-                <Modal />
                 <div className="row">
                     <div className="col-xs-12 favorites">
                         <Link to="/favourites/mybox" className="btn btn-default pull-right">Favourites</Link>
@@ -76,30 +72,26 @@ class LocationsList extends Component {
                                 type="text"
                                 name="searchText"
                                 placeholder="Search..."
-                                value={this.state.placeName}
+                                value={placeName}
                                 onChange={this.onChangeHandler}
-                                className="search-text form-control"/>
-                            <button name="go" className="btn btn-default" onClick={this.getLocations}>Go</button>
+                                className="search-text form-control"
+                            />
+                            <button name="go" className="btn btn-default" onClick={this.getLocations(placeName)}>Go</button>
                             <button name="myLocation" className="btn btn-default" onClick={this.getMyLocation}>My location</button>
                     </div>
                 </div>
-                <div className="row">
-                    {recentSearches.map(this.eachLocation)}
-                </div>
+                {this.recentSearches}
             </div>
         );
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        locationsList: state.locationsList
-    };
-}
+const mapStateToProps = ({ locationsList }) => ({ locationsList });
 
 const mapDispatchToProps = {
     getLocations,
-    resetListings
+    resetListings,
+    getMyLocations
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LocationsList);

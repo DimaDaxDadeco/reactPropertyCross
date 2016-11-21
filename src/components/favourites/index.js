@@ -11,21 +11,13 @@ class FavouritesList extends Component {
 
     render() {
 
-        const { listings } = this.props.favouritesList;
-        const { pathname } = this.props.location;
-        const { id } = this.props.params;
+        const { favouritesList: { listings }, location: { pathname }, params: { id } } = this.props;
 
-        return (
-            <RealtyList listings={listings} pathname={pathname} id={id} />
-        );
+        return <RealtyList listings={listings} pathname={pathname} id={id} />;
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        favouritesList: state.favouritesList
-    };
-}
+const mapStateToProps = ({ favouritesList }) => ({ favouritesList });
 
 const mapDispatchToProps = {
     getFavouritesList

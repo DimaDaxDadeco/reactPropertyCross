@@ -4,8 +4,7 @@ export const getRealtysList = (searchQuery, numPage) => dispatch => {
         .then(response => response.json())
         .then(setListings => {
 
-            const listings = setListings.response.listings;
-            const totalResults = setListings.response.total_results;
+            const { listings, total_results: totalResults } = setListings.response;
             numPage++;
 
             dispatch({
@@ -17,9 +16,9 @@ export const getRealtysList = (searchQuery, numPage) => dispatch => {
         });
 };
 
-export const selectRealty = eachRealtyInfo => dispatch => {
+export const selectRealty = selectedRealty => dispatch => {
     dispatch({
         type: "SELECT_REALTY",
-        eachRealtyInfo
+        selectedRealty
     });
 };

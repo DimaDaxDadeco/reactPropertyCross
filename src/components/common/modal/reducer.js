@@ -1,12 +1,12 @@
 const initialState = {
-    responseCode: null,
-    responseText: ""
+    isModalShowing: false,
+    modalProps: {}
 };
 
-export default function modalError(state = initialState, action) {
+export default function modalView(state = initialState, action) {
     switch (action.type) {
-        case "SET_ERROR":
-            return { ...state, responseCode: action.responseCode, responseText: action.responseText };
+        case "SET_MODAL":
+            return { ...state, isModalShowing: true, modalProps: action.modalProps };
 
         default:
             return state;

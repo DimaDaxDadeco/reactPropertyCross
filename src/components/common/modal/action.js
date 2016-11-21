@@ -1,0 +1,1 @@
+export const resetModal = () => ({ type: "SET_MODAL" });

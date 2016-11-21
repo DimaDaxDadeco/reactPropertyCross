@@ -31,7 +31,8 @@ module.exports = {
             path.resolve("./src/")
         ],
         alias: {
-            "components": path.resolve(__dirname, "src", "components")
+            components: path.resolve(__dirname, "src", "components"),
+            common: path.resolve(__dirname, "src", "components", "common")
         },
         extensions: ["", ".js"]
     },
