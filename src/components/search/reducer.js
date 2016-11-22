@@ -1,7 +1,7 @@
 const initialState = {
     title: "",
     totalResults: null,
-    recentSearches: localStorage.recentSearches ? JSON.parse(localStorage.recentSearches) : []
+    recentSearches: JSON.parse(localStorage.recentSearches)
 };
 
 export default function locationsList(state = initialState, action) {

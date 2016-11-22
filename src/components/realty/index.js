@@ -10,28 +10,32 @@ class Realty extends Component {
     }
 
     init() {
-        const { title } = this.props.realty.selectedRealty;
         this.state = {
-            isFavourite: !this.isRealtyFavorite(title)
+            isFavourite: !this.isRealtyFavorite
         };
     }
 
-    isRealtyFavorite = title => {
+    get isRealtyFavorite() {
         const favourites = JSON.parse(localStorage.favourites);
-        return favourites.some(currentValue => currentValue.title === title);
+        return favourites.some(el => el.title === this.props.realty.title);
     }
 
-    isFavourite = selectedRealty => () => {
+    toggleFavourites = () => {
         const favourites = JSON.parse(localStorage.favourites);
-        favourites.unshift(selectedRealty);
+        if (this.state.isFavourite) {
+            favourites.unshift(this.props.realty);
+        } else {
+            const numOfMatchingElem = favourites.findIndex(el => el.title === this.props.realty.title);
+            favourites.splice(numOfMatchingElem, 1);
+        }
         localStorage.favourites = JSON.stringify(favourites);
         this.setState({
-            isFavourite: false
+            isFavourite: !this.state.isFavourite
         });
     }
 
     render() {
-        const { title, price, property_type: propertyType, summary, bathroom_number: bathroomNumber, bedroom_number: bedroomNumber, img_url: imgUrl } = this.props.realty.selectedRealty;
+        const { title, price, property_type: propertyType, summary, bathroom_number: bathroomNumber, bedroom_number: bedroomNumber, img_url: imgUrl } = this.props.realty;
         const { isFavourite } = this.state;
         const { pathname } = this.props.location;
         const backLink = pathname.split("/").slice(0, -1).join("/");
@@ -41,7 +45,9 @@ class Realty extends Component {
                 <div className="btn btn-default back-button">
                     <Link to={backLink}>Back</Link>
                 </div>
-                { isFavourite && <button className="btn btn-default favourite-add" onClick={this.isFavourite(this.props.realty.selectedRealty)}>+</button> }
+                <button id="favourite-toggle" className="btn btn-default favourite-add" onClick={this.toggleFavourites}>
+                {isFavourite ? "+" : "-"}
+                </button>
                 <img src={imgUrl} alt="realty photo" />
                 <p>{title}</p>
                 <p>{price}</p>

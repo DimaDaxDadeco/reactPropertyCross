@@ -27,8 +27,8 @@ render(
                     <Route path=":query/:title" component={Realty} />
                 </Route>
                 <Route path="favourites">
-                    <Route path=":query" component={FavouritesList} />
-                    <Route path=":query/:title" component={Realty} />
+                    <IndexRoute component={FavouritesList} />
+                    <Route path=":title" component={Realty} />
                 </Route>
             </Route>
         </Router>

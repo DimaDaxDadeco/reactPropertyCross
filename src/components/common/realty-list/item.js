@@ -26,12 +26,16 @@ class Realty extends Component {
         }
     }
 
+    constructUrl = ({ pathname }) => ({
+        pathname: `${pathname}/${this.props.realtyInfo.title}`
+    })
+
     render() {
 
-        const { pathname, realtyInfo: { title, price, propertyType, img_url: imgUrl } } = this.props;
+        const { realtyInfo: { title, price, propertyType, img_url: imgUrl } } = this.props;
 
         return (
-            <Link to={`${pathname}/${title}`} onClick={this.selectRealty}>
+            <Link to={this.constructUrl} onClick={this.selectRealty}>
                 <div className="col-xs-12 matches">
                     <img src={imgUrl} className="photo" alt="realty photo" />
                     <div className="short-info">

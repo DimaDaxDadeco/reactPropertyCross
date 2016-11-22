@@ -16,12 +16,23 @@ class ResultsList extends Component {
         getRealtysList(query, numPage);
     }
 
+    get loadMoreButton() {
+        const { totalResults, listings } = this.props.realtysList;
+        const resultsShowing = listings.length;
+        if (totalResults !== resultsShowing && totalResults) {
+            return <button name="load-more" className="btn btn-default" onClick={this.updateRealtyList}>load-more</button>;
+        }
+    }
+
     render() {
 
-        const { realtysList: { listings, totalResults }, location: { pathname } } = this.props;
+        const { realtysList: { listings, totalResults } } = this.props;
 
         return (
-            <RealtyList listings={listings} totalResults={totalResults} pathname={pathname} updateRealtyList={this.updateRealtyList} />
+            <div>
+                <RealtyList listings={listings} totalResults={totalResults} />
+                {this.loadMoreButton}
+            </div>
         );
     }
 }

@@ -10,7 +10,7 @@ const setLocations = (title, totalResults, recentSearches) => ({
     recentSearches
 });
 
-const hasError = (getLocations, dispatch) => {
+const checkError = (getLocations) => {
     const { application_response_code: responseCode } = getLocations.response;
     const errors = {
         200: "ambiguous location",
@@ -20,6 +20,7 @@ const hasError = (getLocations, dispatch) => {
         900: "bad request",
         500: "internal Nestoria error"
     };
+
     const isError = errors[responseCode];
 
     if (isError) {
@@ -29,13 +30,12 @@ const hasError = (getLocations, dispatch) => {
             responseText,
             type: "error"
         };
-        dispatch(openModal(modalProps));
+        return modalProps;
     }
 
-    return isError;
 };
 
-const setRecentSearches = (getLocations, dispatch) => {
+const setRecentSearches = (getLocations) => {
     const { title } = getLocations.response.locations[0];
     const { total_results: totalResults } = getLocations.response;
     const recentSearches = localStorage.recentSearches ? JSON.parse(localStorage.recentSearches) : [];
@@ -52,23 +52,31 @@ const setRecentSearches = (getLocations, dispatch) => {
 
     localStorage.recentSearches = JSON.stringify(recentSearches);
 
-    dispatch(setLocations(title, totalResults, recentSearches));
+    return setLocations(title, totalResults, recentSearches);
 };
 
-const getLocationsQuery = (url, dispatch) => {
+const getLocationsQuery = (place, dispatch) => {
+    const url = `http://api.nestoria.co.uk/api?country=uk&pretty=1&action=search_listings&encoding=json&listing_type=buy&page=1&${place}`;
     fetch(url)
         .then(response => response.json())
-        .then(getLocations => hasError(getLocations, dispatch) || setRecentSearches(getLocations, dispatch));
+        .then(getLocations => {
+            const error = checkError(getLocations);
+            if (error) {
+                dispatch(openModal(error));
+                return;
+            }
+            dispatch(setRecentSearches(getLocations));
+        });
 };
 
 export const getMyLocations = coordinates => dispatch => {
-    const url = `http://api.nestoria.co.uk/api?country=uk&pretty=1&action=search_listings&encoding=json&listing_type=buy&page=1&centre_point=${coordinates}`;
-    getLocationsQuery(url, dispatch);
+    const place = `centre_point=${coordinates}`;
+    getLocationsQuery(place, dispatch);
 };
 
 export const getLocations = placeName => dispatch => {
-    const url = `http://api.nestoria.co.uk/api?country=uk&pretty=1&action=search_listings&encoding=json&listing_type=buy&page=1&place_name=${placeName}`;
-    getLocationsQuery(url, dispatch);
+    const place = `place_name=${placeName}`;
+    getLocationsQuery(place, dispatch);
 };
 
 export const resetListings = () => ({ type: "RESET_LISTINGS" });

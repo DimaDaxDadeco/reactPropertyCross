@@ -1,3 +1,10 @@
+const setLocations = (listings, totalResults, numPage) => ({
+    type: "SET_LISTINGS",
+    listings,
+    totalResults,
+    numPage
+});
+
 export const getRealtysList = (searchQuery, numPage) => dispatch => {
     const url = `http://api.nestoria.co.uk/api?country=uk&pretty=1&action=search_listings&encoding=json&listing_type=buy&page=${numPage + 1}&place_name=${searchQuery}`;
     fetch(url)
@@ -7,16 +14,11 @@ export const getRealtysList = (searchQuery, numPage) => dispatch => {
             const { listings, total_results: totalResults } = setListings.response;
             numPage++;
 
-            dispatch({
-                type: "SET_LISTINGS",
-                listings,
-                totalResults,
-                numPage
-            });
+            dispatch(setLocations(listings, totalResults, numPage));
         });
 };
 
 export const selectRealty = selectedRealty => ({
     type: "SELECT_REALTY",
-    selectedRealty
+    ...selectedRealty
 });

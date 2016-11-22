@@ -1,11 +1,10 @@
-const initialState = {
-    selectedRealty: null
-};
+const initialState = {};
 
-export default function locationsList(state = initialState, action) {
+export default function selectedRealty(state = initialState, action) {
     switch (action.type) {
         case "SELECT_REALTY":
-            return { ...state, selectedRealty: action.selectedRealty };
+            state = action;
+            return state;
 
         default:
             return state;

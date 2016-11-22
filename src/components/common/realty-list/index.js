@@ -1,28 +1,17 @@
 import React, { Component } from "react";
 import { Link } from "react-router";
-import Realty from "./realty";
+import Realty from "./item";
 
 export default class RealtyList extends Component {
 
     get realtiesList() {
-        const listings = this.props.listings.map(this.eachRealty);
+        const listings = this.props.listings.map((el, i) => (
+            <Realty
+                key={i}
+                realtyInfo={el}
+            />
+        ));
         return listings;
-    }
-
-    eachRealty = (el, i) => (
-        <Realty
-            key={i}
-            realtyInfo={el}
-            pathname={this.props.pathname}
-        />
-    )
-
-    get loadMoreButton() {
-        const { totalResults, listings, updateRealtyList } = this.props;
-        const resultsShowing = listings.length;
-        if (totalResults !== resultsShowing && totalResults) {
-            return <button name="load-more" className="btn btn-default" onClick={updateRealtyList}>load-more</button>;
-        }
     }
 
     render() {
@@ -40,7 +29,6 @@ export default class RealtyList extends Component {
                     {totalResults && <span> of {totalResults} </span>} matches
                 </div>
                 {this.realtiesList}
-                {this.loadMoreButton}
             </div>
         );
     }

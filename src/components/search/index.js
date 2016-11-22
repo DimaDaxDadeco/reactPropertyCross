@@ -19,8 +19,8 @@ class LocationsList extends Component {
         this.props.resetListings();
     }
 
-    getLocations = placeName => () => {
-        this.props.getLocations(placeName);
+    getLocations = () => {
+        this.props.getLocations(this.state.placeName);
     }
 
     getMyLocation = () => (
@@ -35,7 +35,14 @@ class LocationsList extends Component {
     }
 
     get recentSearches() {
-        const searches = this.props.locationsList.recentSearches.map(this.eachLocation);
+        const searches = this.props.locationsList.recentSearches.map((el, i) => (
+            <Location
+                key={el.title}
+                title={el.title}
+                totalResults={el.totalResults}
+                index={i + 1}
+            />
+        ));
         return (
             <div className="row">
                 {searches}
@@ -43,24 +50,12 @@ class LocationsList extends Component {
         );
     }
 
-    eachLocation = (el, i) => (
-        <Location
-            key={el.title}
-            title={el.title}
-            totalResults={el.totalResults}
-            index={i + 1}
-        />
-    )
-
     render() {
-
-        const { placeName } = this.state;
-
         return (
             <div className="search-top">
                 <div className="row">
                     <div className="col-xs-12 favorites">
-                        <Link to="/favourites/mybox" className="btn btn-default pull-right">Favourites</Link>
+                        <Link to="/favourites" className="btn btn-default pull-right">Favourites</Link>
                     </div>
                 </div>
                 <div className="row">
@@ -72,11 +67,11 @@ class LocationsList extends Component {
                             type="text"
                             name="searchText"
                             placeholder="Search..."
-                            value={placeName}
+                            value={this.state.placeName}
                             onChange={this.onChangeHandler}
                             className="search-text form-control"
                         />
-                        <button name="go" className="btn btn-default" onClick={this.getLocations(placeName)}>Go</button>
+                        <button name="go" className="btn btn-default" onClick={this.getLocations}>Go</button>
                         <button name="myLocation" className="btn btn-default" onClick={this.getMyLocation}>My location</button>
                     </div>
                 </div>

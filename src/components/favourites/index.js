@@ -8,7 +8,6 @@ export default class FavouritesList extends Component {
     }
 
     render() {
-        const { pathname } = this.props.location;
-        return <RealtyList listings={this.listings} pathname={pathname} />;
+        return <RealtyList listings={this.listings} />;
     }
 }
