@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import ErrorModal from "./error";
+import { resetModal } from "./action";
 
 const modals = new Map([
     ["error", modalProps => <ErrorModal {...modalProps} />]
@@ -9,13 +10,18 @@ const modals = new Map([
 class Modal extends Component {
     render() {
 
-        const { modalProps, isModalShowing } = this.props;
+        const { modalProps, isModalShowing, resetModal } = this.props;
 
         if (!isModalShowing || !modalProps || !modalProps.type) {
             return null;
         }
 
-        return modals.get(modalProps.type)(modalProps);
+        return (
+            <div className="error-wrap">
+                <div className="hide-wrap" onClick={resetModal} />
+                {modals.get(modalProps.type)(modalProps)}
+            </div>
+        );
     }
 }
 
@@ -24,4 +30,8 @@ const mapStateToProps = ({ modalView: { isModalShowing, modalProps } }) => ({
     modalProps
 });
 
-export default connect(mapStateToProps)(Modal);
+const mapDispatchToProps = {
+    resetModal
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Modal);

@@ -4,6 +4,11 @@ import Realty from "./realty";
 
 export default class RealtyList extends Component {
 
+    get realtiesList() {
+        const listings = this.props.listings.map(this.eachRealty);
+        return listings;
+    }
+
     eachRealty = (el, i) => (
         <Realty
             key={i}
@@ -12,7 +17,7 @@ export default class RealtyList extends Component {
         />
     )
 
-    get showLoadMore() {
+    get loadMoreButton() {
         const { totalResults, listings, updateRealtyList } = this.props;
         const resultsShowing = listings.length;
         if (totalResults !== resultsShowing && totalResults) {
@@ -34,8 +39,8 @@ export default class RealtyList extends Component {
                     {resultsShowing}
                     {totalResults && <span> of {totalResults} </span>} matches
                 </div>
-                {listings.map(this.eachRealty)}
-                {this.showLoadMore}
+                {this.realtiesList}
+                {this.loadMoreButton}
             </div>
         );
     }

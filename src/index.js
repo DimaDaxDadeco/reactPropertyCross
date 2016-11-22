@@ -6,6 +6,15 @@ import configureStore from "./store/configureStore";
 import { Router, Route, browserHistory, IndexRoute } from "react-router";
 import App from "./app";
 
+(() => {
+    const localStorageNames = ["favourites", "recentSearches"];
+    localStorageNames.forEach(item => {
+        if (!localStorage[item]) {
+            localStorage[item] = JSON.stringify([]);
+        }
+    });
+})();
+
 const store = configureStore();
 
 render(
@@ -14,12 +23,12 @@ render(
             <Route path="/" component={App}>
                 <IndexRoute component={LocationsList} />
                 <Route path="results">
-                    <Route path=":id" component={ResultsList} />
-                    <Route path=":id/:title" component={Realty} />
+                    <Route path=":query" component={ResultsList} />
+                    <Route path=":query/:title" component={Realty} />
                 </Route>
                 <Route path="favourites">
-                    <Route path=":id" component={FavouritesList} />
-                    <Route path=":id/:title" component={Realty} />
+                    <Route path=":query" component={FavouritesList} />
+                    <Route path=":query/:title" component={Realty} />
                 </Route>
             </Route>
         </Router>

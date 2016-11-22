@@ -1,26 +1,14 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { getFavouritesList } from "./action";
 import RealtyList from "../common/realty-list";
 
-class FavouritesList extends Component {
+export default class FavouritesList extends Component {
 
-    componentDidMount() {
-        this.props.getFavouritesList();
+    get listings() {
+        return JSON.parse(localStorage.favourites);
     }
 
     render() {
-
-        const { favouritesList: { listings }, location: { pathname }, params: { id } } = this.props;
-
-        return <RealtyList listings={listings} pathname={pathname} id={id} />;
+        const { pathname } = this.props.location;
+        return <RealtyList listings={this.listings} pathname={pathname} />;
     }
 }
-
-const mapStateToProps = ({ favouritesList }) => ({ favouritesList });
-
-const mapDispatchToProps = {
-    getFavouritesList
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(FavouritesList);

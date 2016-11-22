@@ -7,31 +7,31 @@ import { connect } from "react-redux";
 class Realty extends Component {
 
     componentDidMount() {
-        this.scrollToSelectedElement();
+        if (this.props.realty.selectedRealty) {
+            this.scrollToSelectedElement();
+        }
     }
 
-    selectRealty = realtyInfo => () => {
-        this.props.selectRealty(realtyInfo);
+    selectRealty = () => {
+        const { selectRealty, realtyInfo } = this.props;
+        selectRealty(realtyInfo);
     }
 
     scrollToSelectedElement = () => {
-        if (this.props.realty.selectedRealty) {
+        const node = ReactDOM.findDOMNode(this);
+        const { realty: { selectedRealty }, realtyInfo } = this.props;
 
-            const node = ReactDOM.findDOMNode(this);
-            const { realty: { selectedRealty }, realtyInfo } = this.props;
-
-            if (realtyInfo === selectedRealty) {
-                 node.scrollIntoView();
-            }
+        if (realtyInfo === selectedRealty) {
+             node.scrollIntoView();
         }
     }
 
     render() {
 
-        const { pathname, realtyInfo: { title, price, propertyType, img_url: imgUrl }, realtyInfo } = this.props;
+        const { pathname, realtyInfo: { title, price, propertyType, img_url: imgUrl } } = this.props;
 
         return (
-            <Link to={`${pathname}/${title}`} onClick={this.selectRealty(realtyInfo)}>
+            <Link to={`${pathname}/${title}`} onClick={this.selectRealty}>
                 <div className="col-xs-12 matches">
                     <img src={imgUrl} className="photo" alt="realty photo" />
                     <div className="short-info">

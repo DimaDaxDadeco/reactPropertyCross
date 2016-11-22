@@ -12,16 +12,16 @@ class ResultsList extends Component {
     }
 
     updateRealtyList = () => {
-        const { getRealtysList, params: { id }, realtysList: { numPage } } = this.props;
-        getRealtysList(id, numPage);
+        const { getRealtysList, params: { query }, realtysList: { numPage } } = this.props;
+        getRealtysList(query, numPage);
     }
 
     render() {
 
-        const { realtysList: { listings, totalResults }, params: { id }, location: { pathname } } = this.props;
+        const { realtysList: { listings, totalResults }, location: { pathname } } = this.props;
 
         return (
-            <RealtyList listings={listings} totalResults={totalResults} id={id} pathname={pathname} updateRealtyList={this.updateRealtyList} />
+            <RealtyList listings={listings} totalResults={totalResults} pathname={pathname} updateRealtyList={this.updateRealtyList} />
         );
     }
 }

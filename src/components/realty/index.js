@@ -11,9 +11,6 @@ class Realty extends Component {
 
     init() {
         const { title } = this.props.realty.selectedRealty;
-        if (!localStorage.favourites) {
-            localStorage.favourites = JSON.stringify([]);
-        }
         this.state = {
             isFavourite: !this.isRealtyFavorite(title)
         };

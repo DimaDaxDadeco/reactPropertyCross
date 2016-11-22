@@ -16,9 +16,7 @@ export const getRealtysList = (searchQuery, numPage) => dispatch => {
         });
 };
 
-export const selectRealty = selectedRealty => dispatch => {
-    dispatch({
-        type: "SELECT_REALTY",
-        selectedRealty
-    });
-};
+export const selectRealty = selectedRealty => ({
+    type: "SELECT_REALTY",
+    selectedRealty
+});
