@@ -26,6 +26,7 @@ module.exports = {
             }
         ]
     },
+    devtool: "source-map",
     resolve: {
         root: [
             path.resolve("./src/")

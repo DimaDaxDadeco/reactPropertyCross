@@ -1,9 +1,9 @@
 import { createStore, applyMiddleware } from "redux";
-import rootReducer from "../components/reducer";
 import thunk from "redux-thunk";
 import createLogger from "redux-logger";
 
 export default function configureStore(initialState) {
+    const rootReducer = require("../components/reducer");
     const logger = createLogger();
     const store = createStore(
         rootReducer,
