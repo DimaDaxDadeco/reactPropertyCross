@@ -1,7 +1,7 @@
 import React from "react";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
-import { LocationsList, ResultsList, Realty, FavouritesList } from "./components";
+import { LocationsList, ResultsList, Realty, FavouritesList } from "components";
 import configureStore from "./store/configureStore";
 import { Router, Route, browserHistory, IndexRoute } from "react-router";
 import App from "./app";

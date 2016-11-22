@@ -68,16 +68,16 @@ class LocationsList extends Component {
                 </div>
                 <div className="row">
                     <div className="col-xs-12 form-inline">
-                            <input
-                                type="text"
-                                name="searchText"
-                                placeholder="Search..."
-                                value={placeName}
-                                onChange={this.onChangeHandler}
-                                className="search-text form-control"
-                            />
-                            <button name="go" className="btn btn-default" onClick={this.getLocations(placeName)}>Go</button>
-                            <button name="myLocation" className="btn btn-default" onClick={this.getMyLocation}>My location</button>
+                        <input
+                            type="text"
+                            name="searchText"
+                            placeholder="Search..."
+                            value={placeName}
+                            onChange={this.onChangeHandler}
+                            className="search-text form-control"
+                        />
+                        <button name="go" className="btn btn-default" onClick={this.getLocations(placeName)}>Go</button>
+                        <button name="myLocation" className="btn btn-default" onClick={this.getMyLocation}>My location</button>
                     </div>
                 </div>
                 {this.recentSearches}
