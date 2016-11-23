@@ -1,13 +1,16 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { Link } from "react-router";
-import { selectRealty } from "../../results/action";
+import { selectRealty } from "../../realty/action";
 import { connect } from "react-redux";
 
 class Realty extends Component {
 
     componentDidMount() {
-        if (this.props.realty.selectedRealty) {
+        const { realty: selectedRealty, realtyInfo } = this.props;
+        console.log(realtyInfo);
+        console.log(selectedRealty);
+        if (realtyInfo === selectedRealty) {
             this.scrollToSelectedElement();
         }
     }
@@ -19,11 +22,7 @@ class Realty extends Component {
 
     scrollToSelectedElement = () => {
         const node = ReactDOM.findDOMNode(this);
-        const { realty: { selectedRealty }, realtyInfo } = this.props;
-
-        if (realtyInfo === selectedRealty) {
-             node.scrollIntoView();
-        }
+        node.scrollIntoView();
     }
 
     constructUrl = ({ pathname }) => ({

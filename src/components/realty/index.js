@@ -6,10 +6,6 @@ class Realty extends Component {
 
     constructor(props) {
         super(props);
-        this.init();
-    }
-
-    init() {
         this.state = {
             isFavourite: !this.isRealtyFavorite
         };
@@ -22,15 +18,17 @@ class Realty extends Component {
 
     toggleFavourites = () => {
         const favourites = JSON.parse(localStorage.favourites);
-        if (this.state.isFavourite) {
-            favourites.unshift(this.props.realty);
+        const { isFavourite } = this.state;
+        const { realty, realty: { title } } = this.props;
+        if (isFavourite) {
+            favourites.unshift(realty);
         } else {
-            const numOfMatchingElem = favourites.findIndex(el => el.title === this.props.realty.title);
+            const numOfMatchingElem = favourites.findIndex(el => el.title === title);
             favourites.splice(numOfMatchingElem, 1);
         }
         localStorage.favourites = JSON.stringify(favourites);
         this.setState({
-            isFavourite: !this.state.isFavourite
+            isFavourite: !isFavourite
         });
     }
 

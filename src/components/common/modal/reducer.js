@@ -8,6 +8,9 @@ export default function modalView(state = initialState, action) {
         case "SET_MODAL":
             return { ...state, isModalShowing: true, modalProps: action.modalProps };
 
+        case "HIDE_MODAL":
+            return { ...state, isModalShowing: false };
+
         default:
             return state;
     }

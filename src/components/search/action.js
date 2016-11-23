@@ -1,7 +1,4 @@
-const openModal = modalProps => ({
-    type: "SET_MODAL",
-    modalProps
-});
+import { openModal } from "../common/modal/action";
 
 const setLocations = (title, totalResults, recentSearches) => ({
     type: "SET_LOCATIONS",
@@ -10,7 +7,7 @@ const setLocations = (title, totalResults, recentSearches) => ({
     recentSearches
 });
 
-const checkError = (getLocations) => {
+const checkError = getLocations => {
     const { application_response_code: responseCode } = getLocations.response;
     const errors = {
         200: "ambiguous location",
@@ -20,22 +17,17 @@ const checkError = (getLocations) => {
         900: "bad request",
         500: "internal Nestoria error"
     };
+    const error = errors[responseCode];
 
-    const isError = errors[responseCode];
-
-    if (isError) {
-        const responseText = errors[responseCode];
-        const modalProps = {
+    if (error) {
+        return {
             responseCode,
-            responseText,
-            type: "error"
+            responseText: error
         };
-        return modalProps;
     }
-
 };
 
-const setRecentSearches = (getLocations) => {
+const setRecentSearches = getLocations => {
     const { title } = getLocations.response.locations[0];
     const { total_results: totalResults } = getLocations.response;
     const recentSearches = localStorage.recentSearches ? JSON.parse(localStorage.recentSearches) : [];
@@ -62,8 +54,11 @@ const getLocationsQuery = (place, dispatch) => {
         .then(getLocations => {
             const error = checkError(getLocations);
             if (error) {
-                dispatch(openModal(error));
-                return;
+                const modalProps = {
+                    ...error,
+                    type: "error"
+                };
+                return dispatch(openModal(modalProps));
             }
             dispatch(setRecentSearches(getLocations));
         });
@@ -78,5 +73,3 @@ export const getLocations = placeName => dispatch => {
     const place = `place_name=${placeName}`;
     getLocationsQuery(place, dispatch);
 };
-
-export const resetListings = () => ({ type: "RESET_LISTINGS" });

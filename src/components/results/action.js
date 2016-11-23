@@ -18,7 +18,4 @@ export const getRealtysList = (searchQuery, numPage) => dispatch => {
         });
 };
 
-export const selectRealty = selectedRealty => ({
-    type: "SELECT_REALTY",
-    ...selectedRealty
-});
+export const resetListings = () => ({ type: "RESET_LISTINGS" });

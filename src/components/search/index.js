@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getLocations, getMyLocations, resetListings } from "./action";
+import { getLocations, getMyLocations } from "./action";
+import { resetListings } from "../results/action";
 import Location from "./location";
 import { Link } from "react-router";
 import GeolocationService from "../services/GeolocationService";
