@@ -11,24 +11,25 @@ const modals = new Map([
 class Modal extends Component {
 
     hideModal = e => {
-        if (e.target === ReactDOM.findDOMNode(this.refs.modalWrap) || e.target === ReactDOM.findDOMNode(this.refs.buttonOk)) {
+        if (e.target === ReactDOM.findDOMNode(this.refs.modalWrap)) {
             this.props.hideModal();
         }
     }
 
     render() {
 
-        const { modalProps, isModalShowing } = this.props;
+        const { modalProps, isModalShowing, hideModal } = this.props;
 
         if (!isModalShowing || !modalProps || !modalProps.type) {
             return null;
         }
 
+        modalProps.hideModal = hideModal;
+
         return (
             <div className="modal-wrap" ref="modalWrap" onClick={this.hideModal}>
                 <div className="error-modal">
                     {modals.get(modalProps.type)(modalProps)}
-                    <button className="btn btn-default button-ok" ref="buttonOk">Ok</button>
                 </div>
             </div>
         );

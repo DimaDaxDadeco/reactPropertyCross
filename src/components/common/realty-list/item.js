@@ -8,8 +8,6 @@ class Realty extends Component {
 
     componentDidMount() {
         const { realty: selectedRealty, realtyInfo } = this.props;
-        console.log(realtyInfo);
-        console.log(selectedRealty);
         if (realtyInfo === selectedRealty) {
             this.scrollToSelectedElement();
         }
